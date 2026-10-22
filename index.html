@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إلى جنات ♡</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap');
+
+    :root {
+      --night: #100d0b;
+      --brown: #8b5e45;
+      --gold: #edc997;
+      --cream: #fff4df;
+      --pink: #ff9db6;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(ellipse at 50% 50%, #38251c 0%, #1b1410 38%, var(--night) 78%);
+      color: var(--cream);
+      font-family: Cairo, sans-serif;
+    }
+
+    button { font: inherit; }
+
+    #universe {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .stars {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background-image:
+        radial-gradient(1px 1px at 12% 25%, #fff9 99%, transparent),
+        radial-gradient(2px 2px at 78% 17%, #edc99799 99%, transparent),
+        radial-gradient(1px 1px at 62% 73%, #fff7 99%, transparent),
+        radial-gradient(1px 1px at 27% 81%, #edc99799 99%, transparent);
+      background-size: 250px 220px, 330px 300px, 210px 270px, 300px 240px;
+      animation: twinkle 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: .35; }
+      to { opacity: .9; }
+    }
+
+    .gate {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: #100d0bf2;
+      transition: opacity .8s, visibility .8s;
+    }
+
+    .gate.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .gate-card {
+      width: min(100%, 430px);
+      padding: 36px 28px;
+      border: 1px solid #edc99755;
+      border-radius: 26px;
+      background: #211812e8;
+      box-shadow: 0 0 70px #9a604122;
+      text-align: center;
+    }
+
+    .gate-heart {
+      color: var(--pink);
+      font-size: 44px;
+      animation: beat 1.2s infinite;
+    }
+
+    @keyframes beat {
+      50% { transform: scale(1.18); }
+    }
+
+    .gate h1 {
+      margin: 10px 0 4px;
+      color: var(--gold);
+      font-family: Amiri, serif;
+      font-size: 34px;
+    }
+
+    .gate p {
+      color: #d6c4ae;
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    .date-row {
+      display: flex;
+      justify-content: center;
+      gap: 9px;
+      direction: ltr;
+      margin: 20px 0 14px;
+    }
+
+    .date-row input {
+      width: 74px;
+      padding: 12px 8px;
+      border: 1px solid #79563f;
+      border-radius: 12px;
+      outline: none;
+      background: #130f0d;
+      color: white;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .date-row input:focus { border-color: var(--gold); }
+
+    .date-row .year { width: 100px; }
+
+    .primary-button {
+      padding: 12px 25px;
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #edc997, #b87d56);
+      color: #25150e;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .2s;
+    }
+
+    .primary-button:hover { transform: translateY(-2px); }
+
+    #error {
+      min-height: 23px;
+      margin-top: 10px;
+      color: #ff9db6;
+      font-size: 13px;
+    }
+
+    .page {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+      align-items: center;
+      padding: 28px 20px 35px;
+      opacity: 0;
+      transition: opacity 1.3s ease;
+      pointer-events: none;
+    }
+
+    .page.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    header {
+      text-align: center;
+    }
+
+    header .small {
+      color: #d6b58c;
+      font-size: 12px;
+      letter-spacing: 3px;
+    }
+
+    header h1 {
+      margin: 0;
+      color: var(--gold);
+      font-family: Amiri, serif;
+      font-size: clamp(45px, 9vw, 76px);
+      text-shadow: 0 0 30px #c9895855;
+    }
+
+    header p {
+      margin: -4px 0 0;
+      color: #dac7b3;
+      font-family: Amiri, serif;
+      font-size: 19px;
+    }
+
+    .cosmos {
+      position: relative;
+      display: grid;
+      width: min(100%, 900px);
+      min-height: 470px;
+      flex: 1;
+      place-items: center;
+    }
+
+    .orbit {
+      position: absolute;
+      width: min(78vw, 620px);
+      height: min(78vw, 620px);
+      max-height: 430px;
+      border: 1px solid #edc99719;
+      border-radius: 50%;
+      animation: rotate 45s linear infinite;
+    }
+
+    .orbit.two {
+      width: min(65vw, 490px);
+      height: min(65vw, 490px);
+      max-height: 350px;
+      transform: rotate(60deg);
+      animation-duration: 35s;
+      animation-direction: reverse;
+    }
+
+    @keyframes rotate {
+      to { transform: rotate(360deg); }
+    }
+
+    .heart-wrap {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      width: 220px;
+      height: 220px;
+      place-items: center;
+      perspective: 700px;
+      animation: float 4s ease-in-out infinite;
+      cursor: pointer;
+    }
+
+    @keyframes float {
+      50% { transform: translateY(-12px); }
+    }
+
+    .heart {
+      position: relative;
+      width: 110px;
+      height: 110px;
+      transform: rotate(-45deg);
+      background: linear-gradient(145deg, #ffb1be, #d74768 65%, #8d263f);
+      filter: drop-shadow(0 0 24px #ff548488);
+      animation: heartbeat 1.5s ease-in-out infinite;
+    }
+
+    .heart::before, .heart::after {
+      position: absolute;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: inherit;
+      content: "";
+    }
+
+    .heart::before { top: -55px; left: 0; }
+    .heart::after { top: 0; left: 55px; }
+
+    @keyframes heartbeat {
+      50% { transform: rotate(-45deg) scale(1.08); }
+    }
+
+    .heart-label {
+      position: absolute;
+      bottom: 8px;
+      color: #ffe9dd;
+      font-size: 12px;
+      text-shadow: 0 2px 8px #000;
+    }
+
+    .menu {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+    }
+
+    .menu-button {
+      position: absolute;
+      z-index: 3;
+      width: 84px;
+      min-height: 74px;
+      padding: 9px 7px;
+      border: 1px solid #edc99755;
+      border-radius: 20px;
+      background: #241912dd;
+      color: #fff1dc;
+      font-size: 12px;
+      cursor: pointer;
+      pointer-events: auto;
+      backdrop-filter: blur(7px);
+      transition: .25s;
+    }
+
+    .menu-button span {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 22px;
+    }
+
+    .menu-button:hover {
+      border-color: var(--gold);
+      background: #533323;
+      transform: scale(1.08);
+      box-shadow: 0 0 22px #edc99733;
+    }
+
+    .b1 { top: 8%; right: 14%; }
+    .b2 { top: 37%; right: 4%; }
+    .b3 { bottom: 8%; right: 17%; }
+    .b4 { top: 8%; left: 14%; }
+    .b5 { top: 37%; left: 4%; }
+    .b6 { bottom: 8%; left: 17%; }
+
+    .footer-note {
+      margin-top: 0;
+      color: #b9a38d;
+      font-family: Amiri, serif;
+      font-size: 15px;
+      text-align: center;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: #080605c9;
+      opacity: 0;
+      visibility: hidden;
+      transition: .3s;
+    }
+
+    .modal.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-card {
+      position: relative;
+      width: min(100%, 520px);
+      max-height: 82vh;
+      overflow: auto;
+      padding: 34px 28px;
+      border: 1px solid #edc99755;
+      border-radius: 24px;
+      background: linear-gradient(145deg, #2b1c14, #17110e);
+      box-shadow: 0 20px 80px #0009;
+      text-align: center;
+      transform: translateY(16px);
+      transition: .3s;
+    }
+
+    .modal.open .modal-card { transform: translateY(0); }
+
+    .close {
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      width: 36px;
+      height: 36px;
+      border: 1px solid #ffffff22;
+      border-radius: 50%;
+      background: transparent;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .modal-card h2 {
+      margin: 0 0 16px;
+      color: var(--gold);
+      font-family: Amiri, serif;
+      font-size: 30px;
+    }
+
+    .modal-card p {
+      margin: 0;
+      color: #f2dfca;
+      font-family: Amiri, serif;
+      font-size: 22px;
+      line-height: 2;
+      white-space: pre-line;
+    }
+
+    .big-heart {
+      color: #ff7899;
+      font-size: 125px;
+      filter: drop-shadow(0 0 25px #ff4a76aa);
+      animation: beat 1.2s infinite;
+    }
+
+    .memory {
+      display: grid;
+      min-height: 190px;
+      place-items: center;
+      margin-top: 14px;
+      padding: 20px;
+      border: 1px dashed #edc99766;
+      border-radius: 16px;
+      color: #c9ad91;
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    .memory input { max-width: 100%; color: white; }
+
+    #photo-preview {
+      display: none;
+      max-width: 100%;
+      max-height: 300px;
+      border-radius: 14px;
+      object-fit: contain;
+    }
+
+    .sparkle {
+      position: fixed;
+      z-index: 30;
+      color: #ffd998;
+      pointer-events: none;
+      animation: sparkle 1s forwards;
+    }
+
+    @keyframes sparkle {
+      to { opacity: 0; transform: translateY(-70px) scale(1.8); }
+    }
+
+    @media (max-width: 600px) {
+      .page { padding: 24px 12px; }
+      .cosmos { min-height: 420px; }
+      .heart-wrap { transform: scale(.82); }
+      .menu-button { width: 72px; min-height: 67px; font-size: 10px; }
+      .menu-button span { font-size: 20px; }
+      .b1 { top: 5%; right: 8%; }
+      .b2 { top: 38%; right: 0; }
+      .b3 { bottom: 5%; right: 8%; }
+      .b4 { top: 5%; left: 8%; }
+      .b5 { top: 38%; left: 0; }
+      .b6 { bottom: 5%; left: 8%; }
+      .orbit { width: 85vw; height: 85vw; }
+      .orbit.two { width: 68vw; height: 68vw; }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="universe"></canvas>
+  <div class="stars"></div>
+
+  <section class="gate" id="gate">
+    <div class="gate-card">
+      <div class="gate-heart">♡</div>
+      <h1>رسالة إلى جنات</h1>
+      <p>في يوم ميلادك، الكون كله بيقولك: كل سنة وإنتِ أجمل حاجة فيه.<br>اكتبي تاريخ ميلادك عشان تفتحي المفاجأة 🤎</p>
+
+      <div class="date-row">
+        <input id="day" inputmode="numeric" maxlength="2" placeholder="اليوم" aria-label="اليوم">
+        <input id="month" inputmode="numeric" maxlength="2" placeholder="الشهر" aria-label="الشهر">
+        <input id="year" class="year" inputmode="numeric" maxlength="4" placeholder="السنة" aria-label="السنة">
+      </div>
+
+      <button class="primary-button" id="unlock">افتحي رسالتك ✨</button>
+      <div id="error"></div>
+    </div>
+  </section>
+
+  <main class="page" id="page">
+    <header>
+      <div class="small">إِلَى نَجْمَتِي الأَجْمَل</div>
+      <h1>جنات</h1>
+      <p>في مجرّتي، أنتِ أجمل نجمة 🤎</p>
+    </header>
+
+    <section class="cosmos">
+      <div class="orbit"></div>
+      <div class="orbit two"></div>
+
+      <div class="heart-wrap" id="heart-wrap" title="اضغطي على القلب">
+        <div class="heart"></div>
+        <div class="heart-label">قلب واحد… ليكي</div>
+      </div>
+
+      <nav class="menu">
+        <button class="menu-button b1" data-modal="poem"><span>✍️</span>قصيدة ليكي</button>
+        <button class="menu-button b2" data-modal="heart"><span>💗</span>قلب كبير</button>
+        <button class="menu-button b3" data-modal="message"><span>💌</span>رسالة حب</button>
+        <button class="menu-button b4" data-modal="wish"><span>🌙</span>أمنية ليكي</button>
+        <button class="menu-button b5" data-modal="memory"><span>📷</span>صورتنا</button>
+        <button class="menu-button b6" data-modal="surprise"><span>✨</span>مفاجأة</button>
+      </nav>
+    </section>
+
+    <div class="footer-note">كل نجمة في السما شاهدة إني بحبك قدّها وزيادة ✨</div>
+  </main>
+
+  <section class="modal" id="modal">
+    <div class="modal-card">
+      <button class="close" id="close" aria-label="إغلاق">×</button>
+      <h2 id="modal-title"></h2>
+      <div id="modal-content"></div>
+    </div>
+  </section>
+
+  <script>
+    // تاريخ الدخول: 31 مايو 2009
+    const correctDate = { day: "31", month: "5", year: "2009" };
+
+    const gate = document.getElementById("gate");
+    const page = document.getElementById("page");
+    const error = document.getElementById("error");
+
+    document.getElementById("unlock").addEventListener("click", () => {
+      const day = document.getElementById("day").value.trim();
+      const month = document.getElementById("month").value.trim();
+      const year = document.getElementById("year").value.trim();
+
+      if (
+        day === correctDate.day &&
+        Number(month) === Number(correctDate.month) &&
+        year === correctDate.year
+      ) {
+        gate.classList.add("hidden");
+        page.classList.add("visible");
+        localStorage.setItem("janat-page-unlocked", "yes");
+        burstHearts();
+      } else {
+        error.textContent = "التاريخ مش مظبوط، جرّبي تاني 🤍";
+      }
+    });
+
+    // لإظهار الموقع في المرات القادمة على نفس المتصفح
+    if (localStorage.getItem("janat-page-unlocked") === "yes") {
+      gate.classList.add("hidden");
+      page.classList.add("visible");
+    }
+
+    const modal = document.getElementById("modal");
+    const modalTitle = document.getElementById("modal-title");
+    const modalContent = document.getElementById("modal-content");
+
+    const contents = {
+      poem: {
+        title: "قصيدة صغيرة لجنات",
+        html: "<p>يا جنّتي يا ضحكة الأيام<br>يا نجمةً بتنور وسط الزحام<br>لو كان لقلبي أمنية واحدة<br>تبقي قريبة… على طول قدّام</p>"
+      },
+      heart: {
+        title: "قلب مخصوص ليكي",
+        html: '<div class="big-heart">♥</div><p>كل دقّة فيه بتقول: بحبك يا جنات</p>'
+      },
+      message: {
+        title: "رسالة من قلبي",
+        html: "<p>يا جنات، وجودك بيخلّي أبسط اللحظات أحلى. أتمنى أيامك كلها تبقى مليانة ضحكة وراحة وحاجات بتحبيها. كل سنة وإنتِ قريبة من كل حاجة حلوة 🤎</p>"
+      },
+      wish: {
+        title: "أمنيتي ليكي",
+        html: "<p>أتمنى لك سنة جديدة مليانة نجاح وراحة بال، وضحكات كتير، وأحلام تتحقق واحدة واحدة. تستاهلي كل حاجة جميلة يا جنات 🌙</p>"
+      },
+      memory: {
+        title: "حط صورتكم هنا",
+        html: '<div class="memory"><label>اختار صورة من جهازك عشان تظهر هنا:<br><br><input id="photo-input" type="file" accept="image/*"><br><br><img id="photo-preview" alt="صورتكم"></label></div>'
+      },
+      surprise: {
+        title: "مفاجأة صغيرة!",
+        html: "<p>وسط مليارات النجوم…<br>قلبي اختار نجمة واحدة<br><strong>واسمها جنات ✨</strong></p>"
+      }
+    };
+
+    document.querySelectorAll(".menu-button").forEach(button => {
+      button.addEventListener("click", () => {
+        const item = contents[button.dataset.modal];
+        modalTitle.textContent = item.title;
+        modalContent.innerHTML = item.html;
+        modal.classList.add("open");
+
+        const photoInput = document.getElementById("photo-input");
+        if (photoInput) {
+          photoInput.addEventListener("change", event => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const preview = document.getElementById("photo-preview");
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = "block";
+          });
+        }
+      });
+    });
+
+    document.getElementById("close").addEventListener("click", () => {
+      modal.classList.remove("open");
+    });
+
+    modal.addEventListener("click", event => {
+      if (event.target === modal) modal.classList.remove("open");
+    });
+
+    document.getElementById("heart-wrap").addEventListener("click", burstHearts);
+
+    function burstHearts() {
+      const symbols = ["♡", "♥", "✦", "✧"];
+      for (let i = 0; i < 24; i++) {
+        const sparkle = document.createElement("span");
+        sparkle.className = "sparkle";
+        sparkle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        sparkle.style.left = Math.random() * 100 + "vw";
+        sparkle.style.top = (35 + Math.random() * 50) + "vh";
+        sparkle.style.fontSize = (14 + Math.random() * 22) + "px";
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 1000);
+      }
+    }
+
+    // مجرة من نقاط بنية وذهبية مرسومة على Canvas
+    const canvas = document.getElementById("universe");
+    const ctx = canvas.getContext("2d");
+    let width, height, galaxyPoints = [];
+
+    function resizeCanvas() {
+      const scale = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width * scale;
+      canvas.height = height * scale;
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+      ctx.setTransform(scale, 0, 0, scale, 0, 0);
+      createGalaxy();
+    }
+
+    function createGalaxy() {
+      galaxyPoints = [];
+      const cx = width / 2;
+      const cy = height / 2;
+      const radiusX = Math.min(width * 0.43, 520);
+      const radiusY = Math.min(height * 0.38, 340);
+
+      for (let i = 0; i < 1900; i++) {
+        const arm = Math.floor(Math.random() * 3);
+        const distance = Math.random() ** 0.65;
+        const angle = distance * Math.PI * 3.5 + arm * Math.PI * 2 / 3;
+        const scatter = (Math.random() - 0.5) * 0.42;
+        const r = distance;
+
+        galaxyPoints.push({
+          x: cx + Math.cos(angle + scatter) * radiusX * r,
+          y: cy + Math.sin(angle + scatter) * radiusY * r,
+          size: Math.random() * 1.8 + 0.3,
+          alpha: Math.random() * 0.55 + 0.12,
+          shade: Math.random()
+        });
+      }
+    }
+
+    let rotation = 0;
+
+    function drawGalaxy() {
+      ctx.clearRect(0, 0, width, height);
+      rotation += 0.00035;
+
+      const cx = width / 2;
+      const cy = height / 2;
+
+      for (const point of galaxyPoints) {
+        const dx = point.x - cx;
+        const dy = point.y - cy;
+        const cos = Math.cos(rotation);
+        const sin = Math.sin(rotation);
+        const x = cx + dx * cos - dy * sin;
+        const y = cy + dx * sin + dy * cos;
+
+        const color = point.shade > 0.75
+          ? `rgba(237, 201, 151, ${point.alpha})`
+          : `rgba(168, 112, 78, ${point.alpha})`;
+
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.arc(x, y, point.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      requestAnimationFrame(drawGalaxy);
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+    drawGalaxy();
+  </script>
+</body>
+</html>
